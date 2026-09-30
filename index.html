@@ -1437,7 +1437,7 @@ function renderSettings() {
   $('#main').oninput = e => { const f = e.target.dataset.f; if (!f) return; S.settings[f] = e.target.value; store.save('settings', null); if (f === 'kurum2') $('#brandSchool').textContent = e.target.value || 'Toplu ölçme ve değerlendirme'; };
   $('#bk').onclick = () => { S.settings.sonYedek = Date.now(); store.save('settings', null, 0); return saveBlob(`olcek_defteri_yedek_${new Date().toISOString().slice(0, 10)}.json`, new Blob([JSON.stringify({ surum: 2, settings: (({ geminiKey, ...x }) => x)(S.settings), scales: S.scales, classes: S.classes, evals: S.evals, notes: S.notes }, null, 1)], { type: 'application/json' })); };
   $('#rs').onclick = () => {
-    const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+    const inp = document.createElement('input'); inp.type = 'file';
     inp.onchange = async () => {
       try {
         const j = JSON.parse(await inp.files[0].text()); if (!j || !j.scales) throw 0;
@@ -1767,7 +1767,7 @@ function exportPack() {
   saveBlob(`olcek_paketi_${ol.length}_olcek.json`, new Blob([JSON.stringify({ tur: 'olcek-defteri-paket', surum: 1, olcekler: ol }, null, 1)], { type: 'application/json' }));
 }
 function importPack() {
-  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+  const inp = document.createElement('input'); inp.type = 'file';
   inp.onchange = async () => {
     try {
       const j = JSON.parse(await inp.files[0].text()); const arr = Array.isArray(j) ? j : (j.olcekler || (j.scales ? Object.values(j.scales) : null)); if (!arr) throw 0;
